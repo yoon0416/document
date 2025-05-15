@@ -174,4 +174,8 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) {
 2. **우분투 내부에 이미지 파일 직접 업로드**
    - `/home/ubuntu/uploads` 경로에 이미지 저장
    - WebConfig에서 해당 경로 정적 매핑
+3. 수정할 사항
+   - 프론트와 백엔드 서버 각각 독립적으로 하여 효과적으로 빠른 속도로 이미지 랜더링 가능하게
+   - 이미지 불러오는 로직 등 변경하여 트래픽 최소화 및 성능개선 필요
+   - aws 업로드 기준이 아닌 로컬에서 실행했을 때 동작하는지 처음에 구상하고 만든 프로젝트다 보니 aws버전으로 최적화 필요
 ---
