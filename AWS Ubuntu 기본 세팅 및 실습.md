@@ -1,7 +1,7 @@
 # 🚀 AWS Ubuntu 기본 세팅 가이드 (SSGFC 프로젝트 기준)
 제발제발제발제발제발 한줄씩 복붙하세요
 > - 본 설정은 **팀 프로젝트 1: SSGFC** 기준입니다.  
-> - **ec2 t2.meddium*, *Ubuntu 22.04**, **Java 11**, **MySQL 8**, **Spring Boot 내장 톰캣 사용**
+> - **ec2 t2.meddium**, **Ubuntu 22.04**, **Java 11**, **MySQL 8**, **Spring Boot 내장 톰캣 사용**
 > - 프로젝트는  **Java 11**, **MySQL 8**, **Spring Boot 2.7.14**
 > - **파일질라(FireZilla)** 기반 파일 업로드/다운로드  
 > - 로그, JAR, SQL, TMP는 모두 `~/ssgfc` 폴더 기준
