@@ -23,3 +23,5 @@
 
 - [시큐리티 설계 기초](https://github.com/yoon0416/document/blob/main/%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0%20%EA%B8%B0%EC%B4%88%20%EC%84%A4%EA%B3%84%20%EC%A0%95%EB%A6%AC.md)  
   → 보안 위협 대응 시나리오 및 설계 팁 (이 문서만 보지마시고 꼭 반드시반드시반드시반드시 전문가 플젝 참고 혹은 상담하세요 보안 뚫리면 당신책임)
+
+- [자바 라이브러리 정리](https://github.com/yoon0416/document/blob/main/%EC%9E%90%EB%B0%94%20%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%20%EC%A0%95%EB%A6%AC.md)
