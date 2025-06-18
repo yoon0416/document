@@ -1,5 +1,5 @@
-# 프로젝트 인프라 및 암호화 핵심 정리
-
+# argon2
+> - https://crates.io/crates/argon2
 ---
 
 ## 1. 암호화 알고리즘 4가지 장단점
@@ -92,58 +92,6 @@ public class PasswordEncoderConfig {
 
 ---
 
-### AWS 로드 밸런서 3가지 유형
-
-| 유형                   | 주요 기능 및 특징                                             | 장점 및 적합 환경                                   | 단점                                    |
-|----------------------|----------------------------------------------------------|----------------------------------------------|---------------------------------------|
-| **Application Load Balancer (ALB)** | - 7계층(애플리케이션 계층) 로드 밸런싱<br>- HTTP/HTTPS 트래픽 최적화<br>- URL 경로, 헤더 등 세밀한 라우팅 가능 | - 웹 애플리케이션, REST API 서비스에 최적<br>- SSL 종료 및 인증 지원<br>- 스프링 기반 HTTP 서비스에 적합 | - TCP/UDP는 지원하지 않음<br>- NLB 대비 약간 높은 레이턴시 |
-| **Network Load Balancer (NLB)**      | - 4계층(TCP/UDP) 로드 밸런싱<br>- 초고성능, 초저지연 처리 가능<br>- 고정 IP 지원                   | - 고성능 TCP/UDP 서비스, 낮은 지연 시간 요구 환경<br>- 게임 서버, 실시간 통신 등에 적합        | - HTTP 레벨 세밀 라우팅 불가<br>- SSL 종료 불가          |
-| **Gateway Load Balancer (GWLB)**     | - 네트워크 트래픽 가상화 및 서드파티 네트워크 어플라이언스(방화벽, IDS 등) 통합 관리에 특화           | - 네트워크 보안 솔루션 배포에 최적<br>- 복잡한 네트워크 정책과 보안 환경에 적합            | - 일반 웹 애플리케이션에는 부적합<br>- 설정 복잡           |
-
----
-
-### Spring Java 웹 프로젝트에 가장 적합한 로드 밸런서
-
-- **Application Load Balancer (ALB)** 가 가장 적합  
-  - HTTP/HTTPS 트래픽에 특화되어 있으며,  
-  - Spring 기반 REST API, 웹 애플리케이션에 최적화되어 있음
-  - SSL 종료, 인증, 웹소켓, URL 라우팅 등 웹 서비스 필수 기능 지원  
-  - t2.medium 인스턴스와 오토스케일링과 연동하여 무리 없이 운영 가능
-
----
-
-### 요약
-
-| 상황                      | 추천 로드 밸런서              |
-|-------------------------|----------------------------|
-| Spring Java 웹 애플리케이션    | Application Load Balancer (ALB) |
-| 고성능 TCP/UDP 네트워크 필요    | Network Load Balancer (NLB)      |
-| 네트워크 보안 가상 어플라이언스 | Gateway Load Balancer (GWLB)     |
-
----
-
-## 결론:
-- 아르곤2는 파라미터? 그냥 쉽게 커스텀 설정 잘못하면 보안이 오히려 떨어짐
-- 차라리 파라미터값? 커스텀값? 이걸 강하게 가져가서 보안 강하게 하고
-- 다중요청 공격(Dos 공격## 오토스케일링(Auto Scaling) 개념
-
-- **자동으로 EC2 인스턴스 수를 조절해주는 AWS 서비스**  
-- **특징**  
-  - 최소, 최대, 원하는 인스턴스 수를 설정 가능  
-  - CPU 사용률, 네트워크 트래픽 등 모니터링 지표에 따라 인스턴스 증감  
-  - 트래픽 급증 시 인스턴스를 자동 생성해 부하 분산  
-  - 트래픽 감소 시 불필요한 인스턴스 종료해 비용 절감  
-- **장점**  
-  - 트래픽 변화에 유연한 대응 가능  
-  - 서비스 안정성 및 가용성 향상  
-  - 비용 효율적인 리소스 운영 가능
-
----
-
-> 요약:  
-> t2.medium 같이 제한된 리소스 환경에서는 오토스케일링을 통해 서버 대수를 자동으로 조절하여,  
-> 급격한 트래픽 변화에도 과부하 없이 안정적으로 서비스를 운영할 수 있음.
-
 
 ---
 ## 4. AWS 로드 밸런서 개념 및 유형별 특징
@@ -194,4 +142,88 @@ public class PasswordEncoderConfig {
 - 다음 프로젝트 때 ec2가 아닌 로드 밸런서로 인스턴스 올려볼 예정
 
 ---
+## 공식문서 기준 코드들
+> https://github.com/RustCrypto/password-hashes/tree/master/argon2
 
+#### 1. 파라미터 세팅
+```
+use argon2::{Argon2, Algorithm, Version, ParamsBuilder};
+
+fn create_argon2_instance() -> Argon2 {
+    // 메모리 사용량: 32 * 1024 KiB = 32 MiB
+    let memory_kib = 32 * 1024;
+
+    // 반복 횟수 (타임 코스트)
+    let iterations = 3;
+
+    // 병렬성 (CPU 코어 수 등)
+    let parallelism = 1;
+
+    // ParamsBuilder로 파라미터 생성
+    let params = ParamsBuilder::new()
+        .m_cost(memory_kib)    // 메모리 크기 (KiB 단위)
+        .t_cost(iterations)    // 반복 횟수
+        .p_cost(parallelism)   // 병렬성
+        .build()
+        .expect("Invalid Argon2 params");
+
+    // Argon2id 알고리즘, 최신 버전 V0x13 사용
+    Argon2::new(Algorithm::Argon2id, Version::V0x13, params)
+}
+
+
+```
+
+#### 2. 메모리와 시간 성능 튜닝 포인트
+| 파라미터     | 의미                     | 영향                                      |
+| -------- | ---------------------- | --------------------------------------- |
+| `m_cost` | 메모리 크기 (킬로바이트 단위)      | 클수록 메모리 사용량 증가, GPU 공격 방어력 강화, 처리 속도 감소 |
+| `t_cost` | 반복 횟수 (타임 코스트)         | 클수록 연산 시간 증가, 보안성 강화                    |
+| `p_cost` | 병렬 처리 수준 (CPU 코어 수 권장) | 클수록 처리 속도 향상 (병렬 처리 가능한 환경에서)           |
+
+- m_cost는 메모리 사용량을 킬로바이트(KiB) 단위로 지정하며, 32×1024 = 32 MiB가 적당한 중간값 예시입니다.
+- t_cost와 p_cost는 서버 성능과 부하 상황에 따라 적절히 조절해야 합니다.
+
+#### 3. 권장 튜닝 방법
+- 성능과 보안의 균형 맞추기
+  - 서버 메모리와 CPU 리소스를 고려해 m_cost와 t_cost를 조절
+  - 너무 높게 설정하면 서버 과부하 및 응답 지연 발생 가능
+- 병렬성(p_cost)은 서버 CPU 코어 수에 맞게 설정
+  - CPU 코어 수보다 크게 설정해도 성능 향상 제한적
+- 테스트 환경에서 충분히 성능 측정 후 배포
+  - 예: 메모리 32MiB, 반복 3회, 병렬 1~4 권장
+- 예시
+  - 메모리 64MiB, 반복 2회, 병렬 2 → 중간 보안/성능 균형
+  - 메모리 16MiB, 반복 1회, 병렬 1 → 가벼운 환경용
+
+#### 4. 해시 생성 예제
+
+````
+use argon2::{PasswordHasher};
+use password_hash::SaltString;
+use rand_core::OsRng;
+
+fn hash_password(password: &str) -> String {
+    let argon2 = create_argon2_instance();
+    let salt = SaltString::generate(&mut OsRng);
+
+    let password_hash = argon2.hash_password(password.as_bytes(), &salt)
+        .expect("Failed to hash password")
+        .to_string();
+
+    password_hash
+}
+
+````
+#### 5. 해시 검증 예제
+```
+use argon2::{PasswordVerifier};
+use password_hash::PasswordHash;
+
+fn verify_password(hash: &str, password: &str) -> bool {
+    let argon2 = create_argon2_instance();
+    let parsed_hash = PasswordHash::new(hash).expect("Invalid password hash format");
+
+    argon2.verify_password(password.as_bytes(), &parsed_hash).is_ok()
+}
+```
