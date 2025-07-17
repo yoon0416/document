@@ -90,6 +90,7 @@ sudo mysql -uroot -p
 ---
 
 ## 🏃 Spring Boot 실행
+- 귀찮으니 로그는 모르겠고 이걸로 ㄱ
 ```
 nohup java -jar ex1.jar & jobs
 ```
