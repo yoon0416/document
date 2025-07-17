@@ -13,7 +13,7 @@
 scp -i "어떠한 키로" " 어떤 파일을" "어떤 aws 인스턴스에 올리겠다"
 
 ex)
-scp -i "D:\xxx\s3test.pem" "D:\xxx\board.jar" ubuntu@x5.xx4.xxx.xxx:/home/ubuntu/
+scp -i "D:\xxx\s3tt.pem" "D:\xxx\board.jar" ubuntu@x5.xx4.xxx.xxx:/home/ubuntu/
 ```
 
 ---
