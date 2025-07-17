@@ -29,6 +29,8 @@ sudo swapon --show : 현재사용되는 스왑영역 표시
 sudo free -h : 메모리 상태확인
 ```
 
+---
+
 ## 🔐 계정 및 기본 설정
 
 ```bash
