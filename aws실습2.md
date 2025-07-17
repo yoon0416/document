@@ -10,7 +10,7 @@
 1. 다른 cmd창 하나 더 열기 (우분투 들어간 cmd아님.)
    
 ```bash
-scp -i "어떠한 키로" " 어떤 파일을" "어떤 aws 인스턴스에 올리겠다"
+scp -i "어떠한 키로" " 어떤 파일을" 어떤 aws 인스턴스에 올리겠다
 
 ex)
 scp -i "D:\xxx\s3tt.pem" "D:\xxx\board.jar" ubuntu@x5.xx4.xxx.xxx:/home/ubuntu/
