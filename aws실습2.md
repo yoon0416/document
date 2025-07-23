@@ -5,6 +5,13 @@
 3. cmd에 링크 복사한 거 붙여넣고 yes입력
   > 보안이 너무 널널하다고 에러뜨면 설정해주면 됨 (chatgpt 도움 ㄱ)
 
+4. 보안설정 때문에 cmd에서 우분투 안들어가질 경우(한줄씩 실행) 이건 예시임
+```
+icacls "D:\springreact\springreact.pem" /inheritance:r
+icacls "D:\springreact\springreact.pem" /remove "NT AUTHORITY\Authenticated Users"
+icacls "D:\springreact\springreact.pem" /grant:r "$($env:USERNAME):R"
+icacls "D:\springreact\springreact.pem" /remove "BUILTIN\Users"
+```
 
 ## 2. 파일 올리기 - scp 
 1. 다른 cmd창 하나 더 열기 (우분투 들어간 cmd아님.)
