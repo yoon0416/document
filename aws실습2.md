@@ -247,3 +247,135 @@ public class UtilUpload {
 2. maven install
 
 ##### 3 
+
+---
+# sql
+- cmd에서
+```
+scp -i "C:\Users\sallyAn\Desktop\aws_20250615\spring+mybatis+react.pem" "C:\Users\sallyAn\Desktop\aws_20250615\thejoa.sql" ubuntu@13.209.49.199:/home/ubuntu/
+```
+- 우분투에서
+```
+mysql -u root -p thejoa  < thejoa.sql
+```
+
+
+
+# react
+
+##### 14. 노드 설치하기 
+```bash
+sudo  apt-get  update
+sudo  apt-get  install  -y  build-essential
+sudo  apt-get  install  curl
+sudo  apt-get  install nodejs  -y
+sudo  apt-get  install npm
+
+node -v
+npm  -v
+
+sudo npm install          --legacy-peer-deps
+```
+
+##### 15. build
+
+```bash
+sudo npm install react-is
+```
+
+```bash
+sudo npm run build
+```
+
+##### 16. pm2
+
+```bash
+sudo npm install pm2 --legacy-peer-deps
+```
+
+
+##### 17. nginx ?
+
+```bash
+sudo su
+sudo lsof -i tcp:80
+(나오는 값이 없어야 함, 나온다면 sudo kill -9 프로세스아이디(PID))
+```
+
+```bash
+sudo apt-get install -y nginx
+```
+
+```bash
+sudo rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled/default
+```
+
+```bash
+cd /etc/nginx/sites-available
+sudo vi proxy.conf
+```
+
+```bash
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Cookie $http_cookie;
+    }
+
+    location ~ ^/(api|movies|member) {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Cookie $http_cookie;
+    }
+}
+```
+
+~ 정규표현식을 사용하겠다는 의미입니다 (^ 같은 패턴이 들어갈 때 필요)
+^/() 요청 URL이 /로 시작하고 안의 내용(posts 등)과 일치하는지 확인
+
+```bash
+sudo ln -s /etc/nginx/sites-available/proxy.conf /etc/nginx/sites-enabled/proxy.conf
+```
+
+```bash
+sudo nginx -t
+
+```
+
+```bash
+sudo service nginx restart
+```
+
+##### 18.
+
+```bash
+sudo npm start && sudo npx pm2
+npx pm2 logs
+npx pm2 kill
+sudo npx pm2 list
+sudo npx pm2 reload all
+sudo npx pm2 stop app
+
+sudo lsof -i tcp:3065
+sudo lsof -i tcp:80
+```
+
+```bash
+sudo chown ubuntu:ubuntu uploads
+sudo chmod 755 uploads
+```
+
+
+
+
+
