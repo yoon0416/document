@@ -1,5 +1,6 @@
 
 #  HALO_SHOP 3차 프로젝트 배포 가이드 (EC2 + React + Spring Boot + MySQL + Nginx)
+> 작성자 안윤기
 
 ## 📌 서버 정보
 - ec2 : t2.medium
