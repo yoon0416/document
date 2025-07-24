@@ -11,7 +11,19 @@
 - 해당 예시는 kakaopay와 이미지경로가 완벽히 수정된 버전이 아니기 때문에 해당파트 사람이 직접 고치거나 s3 사용하시길 바랍니다 ㅎ
 
 #### 반드시 보안그룹에서 3000포트와 8080포트 허용
+#### 개인적으로 vscode에서 3분활#  HALO_SHOP 3차 프로젝트 배포 가이드 (EC2 + React + Spring Boot + MySQL + Nginx)
 
+## 📌 서버 정보
+- ec2 : t2.medium
+- 퍼블릭 IP: `54.180.80.252`
+- EC2 접속:
+  `ssh -i "haloshop.pem" ubuntu@ec2-54-180-80-252.ap-northeast-2.compute.amazonaws.com`
+- **반드시 코드 잘 보시고 본인 ec2 ip로 바꾸시길 바랍니다.**
+- **또한 위 ec2 ip와 pem 키는 작성자의 것이며 교육용으로 만든 예시기 때문에 해당 코드 그대로 할 시 존재하지 않아 오류가 발생할 것 입니다.**
+- 해당 예시는 kakaopay와 이미지경로가 완벽히 수정된 버전이 아니기 때문에 해당파트 사람이 직접 고치거나 s3 사용하시길 바랍니다 ㅎ
+
+#### 반드시 보안그룹에서 3000포트와 8080포트 허용
+#### 개인적으로 vscode에서 cmd 열 때 3개 분할해서 열고 하나는 front 하나는 back 하나는 window(jar파일 업로드용도)로 작업하는 거 추천드립니다!
 ---
 
 ## 1. IP 치환 작업
@@ -193,11 +205,6 @@ sudo chmod -R 775 .
 sudo chown -R ubuntu:ubuntu .
 ```
 
-빌드 & 실행: (이건 맨 마지막에 하세요 뒤에 다 하고)
-```
-npm run build && npm start
-```
-
 ---
 
 ## 11. PM2 (Node 프로세스 관리자) 설치
@@ -280,10 +287,15 @@ find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx"
 
 ---
 
-## 14. Spring Boot 실행 및 로그 확인
+## 14. front서버 실행 및 Spring Boot 실행 및 로그 확인
 
-> 백엔드 서버 실행 및 로그 실시간 확인 + 서버 실행할 때 시간대 서울로 기준점
+빌드 & 실행: (이건 맨 마지막에 하세요 뒤에 다 하고)
+```
+npm run build && npm start
+```
+<br>
 
+백엔드 서버 실행 및 로그 실시간 확인 + 서버 실행할 때 시간대 서울로 기준점
 ```
 nohup java -Duser.timezone=Asia/Seoul -jar haloshop.jar > haloshop.log 2>&1 &
 tail -f haloshop.log
