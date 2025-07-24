@@ -22,6 +22,7 @@
 - Spring에서 리턴하거나 이미지 접근 등 프론트 주소(`localhost:3000`) → `http://54.180.80.252`
 
 - 예시: 아이템 이미지 업로드 경로 설정  (스프링, 일단 동작을 위해 이것만 해도 다른 대부분 기능 테스트 가능)
+> /items/ItemsImageController.java
 ```java
 String uploadDir = "/home/ubuntu/uploads";
 ```
