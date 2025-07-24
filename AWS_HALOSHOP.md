@@ -288,6 +288,7 @@ tail -f haloshop.log
 ```
 
 ---
+# 여기서부턴 필요하다면 사용
 
 ## 15. Spring Boot 강제 종료
 
