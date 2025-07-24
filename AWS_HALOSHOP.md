@@ -23,6 +23,8 @@
 String uploadDir = "/home/ubuntu/uploads";
 ```
 
+백엔드 다 하셨다면 메이븐 클린 후 메이븐 인스톨 그리고 pem키가 있는 폴더에 jar파일 넣어주세요!
+
 ---
 
 ## 2. pem 키 보안 오류 해결 (Windows PowerShell)
