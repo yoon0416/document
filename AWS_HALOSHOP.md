@@ -280,7 +280,7 @@ find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx"
 
 ## 14. Spring Boot 실행 및 로그 확인
 
-> 백엔드 서버 실행 및 로그 실시간 확인
+> 백엔드 서버 실행 및 로그 실시간 확인 + 서버 실행할 때 시간대 서울로 기준점
 
 ```
 nohup java -Duser.timezone=Asia/Seoul -jar haloshop.jar > haloshop.log 2>&1 &
