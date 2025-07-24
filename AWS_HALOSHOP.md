@@ -2,6 +2,7 @@
 # 🚀 HALO_SHOP 3차 프로젝트 배포 가이드 (EC2 + React + Spring Boot + MySQL + Nginx)
 
 ## 📌 서버 정보
+- ec2 : t2.medium
 - 퍼블릭 IP: `54.180.80.252`
 - EC2 접속:
   `ssh -i "haloshop.pem" ubuntu@ec2-54-180-80-252.ap-northeast-2.compute.amazonaws.com`
